@@ -32,6 +32,16 @@ body {
 	@media screen and (min-width: 640px) { gap: calc(2 * var(--remgap)) }
 }
 
+[data-state="loading"] header,
+[data-state="loading"] section,
+[data-state="loading"] hr,
+[data-state="loading"] footer { opacity: 0 }
+
+[data-state="loaded"] #loader {
+	opacity: 0;
+	transform: translateY(calc(2 * var(--remgap)));
+}
+
 header {
 	position: relative;
 	display: flex;
@@ -40,6 +50,7 @@ header {
 	align-items: center;
 	padding: calc(var(--remgap) / 2);
 	background-color: var(--color-w0);
+	transition: opacity 250ms ease-out;
 	& h1 {
 		margin: 0;
 		z-index: 2;
@@ -185,6 +196,7 @@ nav {
  */
 section {
 	padding: calc(2 * var(--remgap)) var(--remgap);
+	transition: opacity 250ms ease-out;
 	& *::selection { background-color: var(--color-g0) }
 	@media screen and (min-width: 640px) { padding: calc(2 * var(--remgap)) }
 }
@@ -287,14 +299,13 @@ section:first-of-type {
 		& svg {
 			position: sticky;
 			display: block;
-			margin: auto calc(-1.5 * var(--remgap));
+			margin: 5vw calc(-1.5 * var(--remgap));
 			width: calc(4 * var(--remgap));
 			inset-inline: 0;
 			top: 50%;
 			bottom: 50%;
 			color: var(--color-r0);
 			stroke: var(--color-w0);
-			@media screen and (min-width: 480px) { margin-block: 5vw }
 			@media screen and (min-width: 640px) { margin-block: 10vw }
 			@media screen and (min-width: 960px) { margin-block: 15vw }
 		}
@@ -1015,6 +1026,7 @@ footer {
 	line-height: 0;
 	color: var(--color-w0);
 	background-color: var(--color-r0);
+	transition: opacity 250ms ease-out;
 	& *::selection { background-color: var(--color-g0) }
 	& svg {
 		margin-inline: auto;
@@ -1084,6 +1096,26 @@ footer {
 	@media screen and (min-width: 960px) {
 		grid-template-columns: repeat(2, 1fr);
 		padding: calc(2 * var(--remgap));
+	}
+}
+
+/*
+ * Loading animation
+ */
+
+#loader {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	transform: translateY(0);
+	transition: all 250ms ease-out;
+	& svg {
+		position: absolute;
+		display: block;
+		margin: auto;
+		width: 100%;
+		max-width: calc(40 * var(--remgap));
+		inset: 0;
 	}
 }
 
