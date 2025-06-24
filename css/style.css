@@ -282,7 +282,7 @@ section:first-of-type {
 		width: calc(var(--remgap) / 2);
 		height: 100%;
 		overflow-y: clip;
-		background: linear-gradient(0deg, var(--color-d0) 0%, var(--color-d0) 50%, var(--color-r0) 50%);
+		background: linear-gradient(0deg, var(--color-d0) 50%, var(--color-r0) 50%);
 		background-attachment: fixed;
 		& svg {
 			position: sticky;
@@ -294,7 +294,11 @@ section:first-of-type {
 			bottom: 50%;
 			color: var(--color-r0);
 			stroke: var(--color-w0);
+			@media screen and (min-width: 480px) { margin-block: 5vw }
+			@media screen and (min-width: 640px) { margin-block: 10vw }
+			@media screen and (min-width: 960px) { margin-block: 15vw }
 		}
+		@media screen and (min-width: 960px) { left: calc(-0.5 * var(--remgap)) }
 	}
 	& dl {
 		position: relative;
