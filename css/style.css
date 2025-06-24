@@ -38,6 +38,8 @@ body {
 [data-state="loading"] footer { opacity: 0 }
 
 [data-state="loaded"] #loader {
+	pointer-events: none;
+	z-index: -1;
 	opacity: 0;
 	transform: translateY(calc(2 * var(--remgap)));
 }
