@@ -2,6 +2,7 @@
 	--fontface: 'Asap', sans-serif;
 	--remgap: 1rem;
 	--emgap: 1em;
+	--maxwidth: calc(75 * var(--remgap));
 	--color-w0: #fff;
 	--color-b0: #010101;
 	--color-d0: #b19e9e;
@@ -51,6 +52,7 @@ header {
 	justify-content: space-between;
 	align-items: center;
 	padding: calc(var(--remgap) / 2);
+	max-width: var(--maxwidth);
 	background-color: var(--color-w0);
 	transition: opacity 250ms ease-out;
 	& h1 {
@@ -84,7 +86,6 @@ header {
 		top: calc(2 * var(--remgap));
 		inset-inline: 0;
 		width: calc(100% - (5 * var(--remgap)));
-		max-width: calc(100 * var(--remgap));
 	}
 }
 
@@ -238,6 +239,7 @@ section:first-of-type {
 		}
 		& hgroup {
 			position: relative;
+			max-width: var(--maxwidth);
 			text-align: center;
 			text-wrap: balance;
 			color: var(--color-w0);
@@ -320,12 +322,10 @@ section:first-of-type {
 		gap: var(--remgap) calc(2 * var(--remgap));
 		grid-column: 2;
 		grid-row: 2;
-		margin: 0;
+		margin: 0 auto;
+		max-width: var(--maxwidth);
 		@media screen and (min-width: 480px) { grid-template-columns: repeat(2, 1fr) }
-		@media screen and (min-width: 960px) {
-			row-gap: calc(4 * var(--remgap));
-			max-width: calc(100 * var(--remgap));
-		}
+		@media screen and (min-width: 960px) { row-gap: calc(4 * var(--remgap)) }
 	}
 	& dt {
 		grid-column: 1;
@@ -395,7 +395,8 @@ section:nth-of-type(2) {
 	}
 	& h3 {
 		position: relative;
-		margin: 0;
+		margin: 0 auto;
+		max-width: var(--maxwidth);
 		z-index: 1;
 		line-height: 1.125;
 		text-align: center;
@@ -416,7 +417,7 @@ section:nth-of-type(2) {
 		gap: calc(2 * var(--remgap));
 		margin-top: calc(2 * var(--remgap));
 		margin-inline: auto;
-		max-width: calc(100 * var(--remgap));
+		max-width: var(--maxwidth);
 		z-index: 1;
 		color: var(--color-b0);
 		counter-reset: steps;
@@ -467,7 +468,7 @@ section:nth-of-type(3) {
 	justify-items: center;
 	gap: var(--remgap);
 	margin-inline: auto;
-	max-width: calc(100 * var(--remgap));
+	max-width: var(--maxwidth);
 	& h3 {
 		display: block;
 		margin: 0;
@@ -557,7 +558,7 @@ section:nth-of-type(4) {
 	justify-items: center;
 	gap: calc(2 * var(--remgap));
 	margin-inline: auto;
-	max-width: calc(100 * var(--remgap));
+	max-width: var(--maxwidth);
 	& h3 {
 		display: block;
 		margin: 0;
@@ -625,8 +626,9 @@ section:nth-of-type(4) {
 		font-size: 1.5em;
 		font-weight: 800;
 		font-style: italic;
-		color: var(--color-w0);
+		text-align: center;
 		text-decoration: none;
+		color: var(--color-w0);
 		background-color: var(--color-g0);
 		cursor: pointer;
 		&:hover { 
@@ -657,6 +659,9 @@ section:nth-of-type(5) {
 	display: flex;
 	flex-flow: column nowrap;
 	gap: var(--remgap);
+	margin-inline: auto;
+	width: calc(100% - 2 * var(--remgap));
+	max-width: var(--maxwidth);
 	& h3 {
 		display: block;
 		margin: 0;
@@ -739,6 +744,7 @@ section:nth-of-type(5) {
 			}
 		}
 	}
+	@media screen and (min-width: 640px) { width: calc(100% - 4 * var(--remgap)) }
 	@media screen and (min-width: 960px) {
 		& table td::before { display: none }
 	}
@@ -749,8 +755,11 @@ section:nth-of-type(5) {
  */
 
 section:nth-of-type(6) {
+	display: grid;
+	grid-template-columns: minmax(min-content, var(--maxwidth));
+	justify-content: center;
+	align-items: center;
 	margin-inline: calc(-1 * var(--remgap));
-	max-width: calc(100 * var(--remgap));
 	background-color: var(--color-d1);
 	& h3,
 	& p {
@@ -846,6 +855,7 @@ section:nth-of-type(6) {
 		text-align: center;
 		@media screen and (min-width: 640px) { text-align: left }
 	}
+	@media screen and (min-width: 640px) { margin-inline: calc(-2 * var(--remgap)) }
 	@media screen and (min-width: 960px) { margin-inline: 0 }
 }
 
@@ -859,7 +869,7 @@ section:nth-of-type(7) {
 	justify-items: center;
 	gap: var(--remgap);
 	margin-inline: auto;
-	max-width: calc(100 * var(--remgap));
+	max-width: var(--maxwidth);
 	& h3 {
 		display: block;
 		margin: 0;
@@ -929,7 +939,7 @@ section:last-of-type {
 	justify-items: center;
 	gap: var(--remgap);
 	margin-inline: auto;
-	max-width: calc(100 * var(--remgap));
+	max-width: var(--maxwidth);
 	& h3 {
 		display: block;
 		margin: 0;
@@ -1007,12 +1017,13 @@ section:last-of-type {
 
 hr {
 	display: block;
-	margin: 0 var(--remgap);
+	margin: 0 auto;
 	border: 0;
 	background-color: var(--color-d1);
-	max-width: calc(100 * var(--remgap));
+	width: calc(100% - var(--remgap));
+	max-width: var(--maxwidth);
 	height: calc(var(--remgap) / 2);
-	@media screen and (min-width: 640px) { margin: 0 calc(2 * var(--remgap)) }
+	@media screen and (min-width: 640px) { width: calc(100% - 2 * var(--remgap)) }
 }
 
 /*
@@ -1096,7 +1107,7 @@ footer {
 		}
 	}
 	@media screen and (min-width: 960px) {
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(2, minmax(min-content, calc(var(--maxwidth) / 2)));
 		padding: calc(2 * var(--remgap));
 	}
 }
