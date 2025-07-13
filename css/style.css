@@ -13,6 +13,7 @@
 	--color-r0: #e42936;
 	--color-y0: #face37;
 	--transitiontime: 150ms;
+	--slidertransitiontime: 500ms;
 	--textshadow: calc(var(--remgap) / 4) calc(var(--remgap) / 4) calc(var(--remgap) / 2) var(--color-b0);
 }
 
@@ -216,19 +217,94 @@ section:first-of-type {
 	row-gap: calc(2 * var(--remgap));
 	column-gap: var(--remgap);
 	margin-top: calc(-1 * var(--remgap));
+	padding-block-start: 0;
 	& div {
 		position: relative;
-		display: flex;
-		flex-flow: column nowrap;
-		justify-content: flex-end;
-		align-items: center;
-		gap: var(--remgap);
 		grid-column: 1 / -1;
 		grid-row: 1;
 		margin-inline: calc(-1 * var(--remgap));
-		margin-top: calc(-2 * var(--remgap));
-		padding: var(--remgap);
 		aspect-ratio: 1 / 1;
+		&>button {
+			position: absolute;
+			display: block;
+			margin: auto;
+			padding-inline: var(--remgap);
+			border: 0;
+			inset-block: 0;
+			width: calc(4 * var(--remgap));
+			height: 100%;
+			z-index: 1;
+			appearance: none;
+			color: var(--color-w0);
+			opacity: 0;
+			cursor: pointer;
+			transition: opacity var(--transitiontime);
+			& svg {
+				opacity: .5;
+				transition: opacity var(--transitiontime);
+			}
+			&:first-of-type {
+				left: 0;
+				background: linear-gradient(to right, rgba(0 0 0 / .5), rgba(0 0 0 / 0));
+			}
+			&:last-of-type {
+				right: 0;
+				background: linear-gradient(to left, rgba(0 0 0 / .5), rgba(0 0 0 / 0));
+			}
+			&:hover>svg,
+			&:active>svg { opacity: 1 }
+		}
+		&:hover>button,
+		&:active>button { opacity: 1 }
+		@media screen and (min-width: 640px) {
+			margin-inline: calc(-2 * var(--remgap));
+			aspect-ratio: 4 / 3;
+		}
+	}
+	& ul {
+		position: absolute;
+		display: block;
+		margin-inline: 0;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 100%;
+		list-style: none;
+		& li {
+			position: relative;
+			display: flex;
+			flex-flow: column nowrap;
+			justify-content: flex-end;
+			align-items: center;
+			gap: var(--remgap);
+			margin: 0;
+			padding: 0;
+			height: 0;
+			min-width: calc(100% - 2 * var(--remgap));
+			opacity: 0;
+			pointer-events: none;
+			will-change: transform;
+			transform: translateX(calc(2 * var(--remgap)));
+			transition: transform var(--slidertransitiontime) ease-in-out, opacity var(--transitiontime);
+			&[data-current-slide="true"] {
+				padding: var(--remgap);
+				height: calc(100% - 2 * var(--remgap));
+				opacity: 1;
+				pointer-events: auto;
+				transform: translateX(0);
+				& h2,
+				& h3,
+				& a {
+					opacity: 1;
+					transform: translateX(0);
+				}
+				@media screen and (min-width: 640px) {
+					padding: calc(2 * var(--remgap));
+					height: calc(100% - 4 * var(--remgap));
+				}
+			}
+			@media screen and (min-width: 640px) { min-width: calc(100% - 4 * var(--remgap)) }
+		}
 		& img {
 			position: absolute;
 			inset: 0;
@@ -246,10 +322,18 @@ section:first-of-type {
 			text-shadow: var(--textshadow);
 			&>* { margin: 0 }
 		}
+		& h2,
+		& h3,
+		& a {
+			opacity: 0;
+			transform: translateX(calc(4 * var(--remgap)));
+			transition: transform var(--slidertransitiontime) ease-in-out, opacity var(--transitiontime);
+		}
 		& h2 {
 			line-height: 1.125;
 			font-size: 3em;
 			font-weight: 800;
+			transition-delay: 0s;
 			@media screen and (min-width: 480px) { font-size: 4em }
 			@media screen and (min-width: 640px) { font-size: 5em }
 			@media screen and (min-width: 960px) { font-size: 6em }
@@ -258,6 +342,7 @@ section:first-of-type {
 			line-height: 1.25;
 			font-size: 1.25em;
 			font-weight: 700;
+			transition-delay: 100ms;
 			@media screen and (min-width: 640px) { font-size: 1.5em }
 			@media screen and (min-width: 960px) { font-size: 2em }
 		}
@@ -273,21 +358,8 @@ section:first-of-type {
 			text-decoration: none;
 			background-color: var(--color-g0);
 			cursor: pointer;
+			transition-delay: 150ms;
 			&:hover { background-color: var(--color-w0) }
-		}
-		&::before {
-			position: absolute;
-			display: block;
-			margin: auto;
-			inset: 0;
-			background-color: var(--color-b0);
-			content: '';
-			opacity: .25;
-		}
-		@media screen and (min-width: 640px) {
-			margin-inline: calc(-2 * var(--remgap));
-			padding: calc(2 * var(--remgap));
-			aspect-ratio: 4 / 3;
 		}
 	}
 	& span {
@@ -1135,7 +1207,11 @@ footer {
 @keyframes reveal_anim {
 	0% {
 		opacity: 0;
-		transform: translateX(calc(4 * var(--remgap)));
+		transform: translateX(var(--remgap));
+	}
+	75% {
+		opacity: 0;
+		transform: translateX(var(--remgap));
 	}
 	100% {
 		opacity: 1;
