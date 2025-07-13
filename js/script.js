@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-	const loader = document.getElementById('loader').querySelector('animate')
+	const loader = document.getElementById('loader')?.querySelector('animate')
 	const slides = document.querySelector('section ul')
 	const slideDelay = 3000
-	const slideCount = slides.childElementCount
-	const prevSlideBtn = slides.previousElementSibling
-	const nextSlideBtn = slides.nextElementSibling
+	const slideCount = slides?.childElementCount
+	const prevSlideBtn = slides?.previousElementSibling
+	const nextSlideBtn = slides?.nextElementSibling
 	let currentSlide = 0
-	let autoChange
+	let autoChangeSlides
 
 	const changeSlide = (goForward = true) => {
 		delete slides.children[currentSlide].dataset.currentSlide
@@ -20,30 +20,30 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	const navigateSlides = (goForward) => {
-		clearInterval(autoChange)
+		clearInterval(autoChangeSlides)
 		changeSlide(goForward)
 	}
 
-	slides.addEventListener('mouseover', () => {
-		clearInterval(autoChange)
+	slides?.addEventListener('mouseover', () => {
+		clearInterval(autoChangeSlides)
 	}, false)
 
-	slides.addEventListener('mouseleave', () => {
-		autoChange = setInterval(changeSlide, slideDelay)
+	slides?.addEventListener('mouseleave', () => {
+		autoChangeSlides = setInterval(changeSlide, slideDelay)
 	}, false)
 
-	prevSlideBtn.addEventListener('click', () => {
+	prevSlideBtn?.addEventListener('click', () => {
 		navigateSlides(false)
 	}, false)
 
-	nextSlideBtn.addEventListener('click', () => {
+	nextSlideBtn?.addEventListener('click', () => {
 		navigateSlides(true)
 	}, false)
 
-	loader.addEventListener('endEvent', () => {
+	loader?.addEventListener('endEvent', () => {
 		document.documentElement.dataset.state = 'loaded'
 		window.scrollTo(0, 0)
-		autoChange = setInterval(changeSlide, slideDelay)
+		autoChangeSlides = setInterval(changeSlide, slideDelay)
 		slides.children[currentSlide].dataset.currentSlide = true
 	}, false)
 })

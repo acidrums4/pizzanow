@@ -3,6 +3,7 @@
 	--remgap: 1rem;
 	--emgap: 1em;
 	--maxwidth: calc(75 * var(--remgap));
+	--maxtextwidth: calc(60 * var(--remgap));
 	--color-w0: #fff;
 	--color-b0: #010101;
 	--color-d0: #b19e9e;
@@ -110,7 +111,7 @@ nav {
 	input {
 		display: none;
 		&:checked ~ #menu {
-			z-index: 1;
+			z-index: 2;
 			transform: translateY(0);
 			pointer-events: auto;
 		}
@@ -195,6 +196,17 @@ nav {
 	}
 }
 
+hr {
+	display: block;
+	margin: 0 auto;
+	border: 0;
+	background-color: var(--color-d1);
+	width: calc(100% - var(--remgap));
+	max-width: var(--maxwidth);
+	height: calc(var(--remgap) / 2);
+	@media screen and (min-width: 640px) { width: calc(100% - 2 * var(--remgap)) }
+}
+
 /*
  * Common section stuff
  */
@@ -271,39 +283,38 @@ section:first-of-type {
 		height: 100%;
 		list-style: none;
 		& li {
-			position: relative;
+			position: absolute;
 			display: flex;
 			flex-flow: column nowrap;
 			justify-content: flex-end;
 			align-items: center;
 			gap: var(--remgap);
 			margin: 0;
-			padding: 0;
-			height: 0;
-			min-width: calc(100% - 2 * var(--remgap));
+			padding: var(--remgap);
+			width: calc(100% - 2 * var(--remgap));
+			height: calc(100% - 2 * var(--remgap));
+			inset: 0;
+			z-index: 0;
 			opacity: 0;
 			pointer-events: none;
 			will-change: transform;
-			transform: translateX(calc(2 * var(--remgap)));
-			transition: transform var(--slidertransitiontime) ease-in-out, opacity var(--transitiontime);
+			transition: opacity var(--slidertransitiontime);
 			&[data-current-slide="true"] {
-				padding: var(--remgap);
-				height: calc(100% - 2 * var(--remgap));
+				z-index: 1;
 				opacity: 1;
 				pointer-events: auto;
-				transform: translateX(0);
 				& h2,
 				& h3,
 				& a {
 					opacity: 1;
 					transform: translateX(0);
 				}
-				@media screen and (min-width: 640px) {
-					padding: calc(2 * var(--remgap));
-					height: calc(100% - 4 * var(--remgap));
-				}
 			}
-			@media screen and (min-width: 640px) { min-width: calc(100% - 4 * var(--remgap)) }
+			@media screen and (min-width: 640px) {
+				padding: calc(2 * var(--remgap));
+				width: calc(100% - 4 * var(--remgap));
+				height: calc(100% - 4 * var(--remgap));
+			}
 		}
 		& img {
 			position: absolute;
@@ -313,8 +324,9 @@ section:first-of-type {
 			object-fit: cover;
 			object-position: 50% 50%;
 		}
-		& hgroup {
+		& span {
 			position: relative;
+			display: block;
 			max-width: var(--maxwidth);
 			text-align: center;
 			text-wrap: balance;
@@ -362,7 +374,7 @@ section:first-of-type {
 			&:hover { background-color: var(--color-w0) }
 		}
 	}
-	& span {
+	&>span {
 		position: relative;
 		grid-column: 1;
 		grid-row: 2;
@@ -1087,15 +1099,112 @@ section:last-of-type {
 	@media screen and (min-width: 960px) { column-gap: calc(4 * var(--remgap)) }
 }
 
-hr {
-	display: block;
-	margin: 0 auto;
-	border: 0;
-	background-color: var(--color-d1);
-	width: calc(100% - var(--remgap));
-	max-width: var(--maxwidth);
-	height: calc(var(--remgap) / 2);
-	@media screen and (min-width: 640px) { width: calc(100% - 2 * var(--remgap)) }
+/*
+ * Internal page
+ */
+
+article {
+	position: relative;
+	padding-inline: var(--remgap);
+	&>picture:first-child {
+		display: block;
+		margin-block-start: calc(-2 * var(--remgap));
+		margin-inline: calc(-1 * var(--remgap));
+		width: calc(100% + 2 * var(--remgap));
+		aspect-ratio: 2 / 1;
+		overflow: hidden;
+		animation: scroll_article_picture linear forwards;
+		animation-timeline: scroll();
+		animation-range: 0% 100%;
+		& img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			object-position: 50% 50%;
+		}
+		@media screen and (min-width: 960px) { margin-block-start: 0 }
+	}
+	& h3,
+	& h4 {
+		display: block;
+		margin-inline: auto;
+		max-width: var(--maxtextwidth);
+		line-height: 1.125em;
+		text-wrap: balance;
+	}
+	& h3 {
+		font-size: 2em;
+		font-weight: 800;
+		text-align: center;
+		&::after {
+			display: block;
+			margin-inline: auto;
+			margin-block-start: var(--remgap);
+			width: calc(4 * var(--remgap));
+			aspect-ratio: 3 / 1;
+			content: '';
+			background-color: var(--color-r0);
+			mask-size: cover;
+			mask: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3Ni43NiAyNS44NiI+PHBhdGggZD0ibTAgMjUuODYgNzYuNzYtLjgxLTU1Ljc2LTI1LjA1eiIvPjwvc3ZnPg==');
+		}
+	}
+	& h4 {
+		font-size: 1.5em;
+		font-weight: 600;
+		&::before {
+			display: inline-block;
+			margin-inline-start: calc(-1 * var(--remgap));
+			margin-inline-end: var(--remgap);
+			width: calc(3 * var(--remgap));
+			aspect-ratio: 3 / 1;
+			content: '';
+			background-color: var(--color-r0);
+			mask-size: cover;
+			mask: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3Ni43NiAyNS44NiI+PHBhdGggZD0ibTAgMjUuODYgNzYuNzYtLjgxLTU1Ljc2LTI1LjA1eiIvPjwvc3ZnPg==');
+		}
+	}
+	& p,
+	& ol,
+	& ul,
+	& dl {
+		margin: 0 auto;
+		max-width: var(--maxtextwidth);
+		line-height: 1.5;
+		font-size: 1.125em;
+		font-weight: 400;
+		&+p,
+		&+ol,
+		&+ul,
+		&+dl { margin-block-start: var(--emgap) }
+		@media screen and (min-width: 960px) { font-size: 1.25em }
+	}
+	& figure {
+		display: flex;
+		flex-flow: column nowrap;
+		gap: var(--emgap);
+		margin: calc(2 * var(--emgap)) calc(-1 * var(--remgap));
+		width: calc(100% + 2 * var(--remgap));
+		opacity: 0;
+		animation: scroll_article_figure linear forwards;
+		animation-timeline: view();
+		animation-range: entry 50% cover 50%;
+		&  picture {
+			display: block;
+			margin: 0 auto;
+			line-height: 0;
+		}
+		& figcaption {
+			margin: 0 auto;
+			max-width: var(--maxtextwidth);
+			line-height: 1.5;
+			text-align: center;
+		}
+	}
+	& dt {
+		margin-inline-end: var(--emgap);
+		float: inline-start;
+		font-weight: 700;
+	}
 }
 
 /*
@@ -1217,6 +1326,22 @@ footer {
 		opacity: 1;
 		transform: translateX(0);
 	}
+}
+
+@keyframes scroll_article_picture {
+	0% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(-50%);
+	}
+}
+
+@keyframes scroll_article_figure {
+	from { opacity: 0 }
+	to { opacity: 1 }
 }
 
 @font-face {
