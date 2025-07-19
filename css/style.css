@@ -397,7 +397,10 @@ section:first-of-type {
 			@media screen and (min-width: 640px) { margin-block: 10vw }
 			@media screen and (min-width: 960px) { margin-block: 15vw }
 		}
-		@media screen and (min-width: 960px) { left: calc(-0.5 * var(--remgap)) }
+		@media screen and (min-width: 960px) {
+			position: absolute;
+			left: calc(50% - (var(--maxwidth) / 2) - (3 * var(--remgap)));
+		}
 	}
 	& dl {
 		position: relative;
@@ -459,7 +462,10 @@ section:first-of-type {
 	& dd:nth-of-type(5)+dd {
 		@media screen and (min-width: 480px) { grid-row-start: 5 }
 	}
-	@media screen and (min-width: 640px) { margin-top: calc(-2 * var(--remgap)) }
+	@media screen and (min-width: 640px) {
+		column-gap: calc(-2 * var(--remgap));
+		margin-top: calc(-2 * var(--remgap));
+	}
 }
 
 /*
@@ -1111,7 +1117,7 @@ article {
 		margin-block-start: calc(-2 * var(--remgap));
 		margin-inline: calc(-1 * var(--remgap));
 		width: calc(100% + 2 * var(--remgap));
-		aspect-ratio: 2 / 1;
+		aspect-ratio: 4 / 1;
 		overflow: hidden;
 		animation: scroll_article_picture linear forwards;
 		animation-timeline: scroll();
