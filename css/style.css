@@ -56,9 +56,8 @@ header {
 	padding: calc(var(--remgap) / 2);
 	max-width: var(--maxwidth);
 	top: 0;
-	z-index: 2;
+	z-index: 3;
 	background-color: var(--color-w0);
-	box-shadow: 0 0 var(--remgap) var(--remgap) rgba(0, 0, 0, .2);
 	transition: opacity 250ms ease-out;
 	& h1 {
 		margin: 0;
@@ -76,13 +75,13 @@ header {
 		position: absolute;
 		display: block;
 		margin: auto;
-		inset: 0;
+		inset-block: 0;
+		inset-inline: -100%;
 		background-color: var(--color-w0);
 		content: '';
 		z-index: 2;
 		pointer-events: none;
-		left: -100%;
-		right: -100%;
+		box-shadow: 0 0 var(--remgap) var(--remgap) rgba(0, 0, 0, .2);
 	}
 	@media screen and (min-width: 640px) { padding: calc(var(--remgap) / 2) calc(2 * var(--remgap)) }
 	@media screen and (min-width: 960px) {
@@ -236,7 +235,7 @@ section:first-of-type {
 		grid-column: 1 / -1;
 		grid-row: 1;
 		margin-inline: calc(-1 * var(--remgap));
-		aspect-ratio: 1 / 1;
+		aspect-ratio: 4 / 3;
 		&>button {
 			position: absolute;
 			display: block;
@@ -246,7 +245,7 @@ section:first-of-type {
 			inset-block: 0;
 			width: calc(4 * var(--remgap));
 			height: 100%;
-			z-index: 1;
+			z-index: 2;
 			appearance: none;
 			color: var(--color-w0);
 			opacity: 0;
@@ -271,11 +270,9 @@ section:first-of-type {
 		&:active>button { opacity: 1 }
 		@media screen and (min-width: 640px) {
 			margin-inline: calc(-2 * var(--remgap));
-			aspect-ratio: 4 / 3;
+			aspect-ratio: 16 / 9
 		}
-		@media screen and (min-width: 960px) {
-			aspect-ratio: 16 / 9;
-		}
+		@media screen and (min-width: 960px) { aspect-ratio: 3 / 1 }
 	}
 	& ul {
 		position: absolute;
@@ -347,12 +344,11 @@ section:first-of-type {
 		}
 		& h2 {
 			line-height: 1.125;
-			font-size: 3em;
+			font-size: 2em;
 			font-weight: 800;
 			transition-delay: 0s;
-			@media screen and (min-width: 480px) { font-size: 4em }
-			@media screen and (min-width: 640px) { font-size: 5em }
-			@media screen and (min-width: 960px) { font-size: 6em }
+			@media screen and (min-width: 640px) { font-size: 3em }
+			@media screen and (min-width: 1600px) { font-size: 4em }
 		}
 		& h3 {
 			line-height: 1.25;
@@ -401,9 +397,13 @@ section:first-of-type {
 			@media screen and (min-width: 640px) { margin-block: 10vw }
 			@media screen and (min-width: 960px) { margin-block: 15vw }
 		}
-		@media screen and (min-width: 960px) {
+		@media screen and (min-width: 640px) {
 			position: absolute;
-			left: calc(50% - (var(--maxwidth) / 2) - (3 * var(--remgap)));
+			left: 0;
+			left: calc(-.5 * var(--remgap));
+		}
+		@media screen and (min-width: 960px) {
+			left: max(calc(var(--remgap) / 32), calc(50% - var(--maxwidth) / 2) - var(--remgap));
 		}
 	}
 	& dl {
@@ -416,7 +416,14 @@ section:first-of-type {
 		margin: 0 auto;
 		max-width: var(--maxwidth);
 		@media screen and (min-width: 480px) { grid-template-columns: repeat(2, 1fr) }
-		@media screen and (min-width: 960px) { row-gap: calc(4 * var(--remgap)) }
+		@media screen and (min-width: 640px) {
+			padding-inline-start: calc(2 * var(--remgap));
+		}
+		@media screen and (min-width: 960px) {
+			padding-inline-start: calc(2 * var(--remgap));
+			row-gap: calc(4 * var(--remgap));
+			max-width: calc(var(--maxwidth) - 6 * var(--remgap));
+		}
 	}
 	& dt {
 		grid-column: 1;
