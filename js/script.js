@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		} else {
 			currentSlide = currentSlide > 0 ? currentSlide - 1 : slideCount - 1
 		}
-		console.log(currentSlide)
 		slides.children[currentSlide].dataset.currentSlide = true
 	}
 
@@ -41,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}, false)
 
 	loader?.addEventListener('endEvent', () => {
+		if (!loader) return
 		document.documentElement.dataset.state = 'loaded'
 		window.scrollTo(0, 0)
 		autoChangeSlides = setInterval(changeSlide, slideDelay)
