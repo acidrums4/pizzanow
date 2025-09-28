@@ -1268,6 +1268,7 @@ article {
 		& dd {
 			display: block;
 		}
+		&>p { width: 100% }
 		&+section::before {
 			position: absolute;
 			display: block;
@@ -1279,6 +1280,53 @@ article {
 	        inset-block-start: -2rem;
 			content: '';
 			background-color: var(--color-d1);
+		}
+		&.cards {
+			display: grid;
+			container-type: inline-size;
+			& section {
+				display: grid;
+				grid-template-columns: min-content 1fr;
+				grid-auto-rows: minmax(min-content, max-content);
+				grid-auto-flow: dense;
+				row-gap: 0;
+				margin-block: 0;
+				padding-inline: calc(2 * var(--remgap));
+				padding-block: calc(2 * var(--remgap));
+				background: var(--color-g1);
+				+ section::before { display: none }
+				&>* { width: 100% }
+				& h5 { 
+					display: block;
+					grid-column: 2/3;
+					margin-block-end: 1rem;
+					font-size: 1.5em;
+				}
+				& svg {
+					grid-column: 1/2;
+					grid-row: 1/9999;
+					margin-inline: auto;
+					margin-block-end: 1rem;
+					padding: 1rem;
+					border-radius: 50%;
+					width: 2rem;
+					height: 2rem;
+					fill: none;
+					background-color: var(--color-w0);
+					stroke: color-mix(in srgb, var(--color-b0) 30%, var(--color-g1) 70%);
+					stroke-width: 1.5px;
+				}
+				& ul,
+				& ol,
+				& p,
+				& dl,
+				& ul { grid-column: 2/3 }
+				& ul {
+					padding-inline-start: 0;
+					& li::marker { color: color-mix(in srgb, var(--color-b0) 30%, var(--color-g1) 70%) }
+				}
+			}
+			@container (min-width: 640px) { grid-template-columns: repeat(2, 1fr) }
 		}
 		.statistics & {
 			&>div {
@@ -1298,10 +1346,8 @@ article {
 					@media screen and (min-width: 960px) { grid-column: 2/3 }
 				}
 			}
-			@media screen and (min-width: 960px) { grid-template-columns: repeat(2, 1fr) }
-		}
-		.statistics & {
 			@media screen and (min-width: 960px) {
+				grid-template-columns: repeat(2, 1fr);
 				gap: calc(2 * var(--remgap)) calc(4 * var(--remgap));
 				max-width: calc(var(--maxwidth) * .75);
 			}
@@ -1309,7 +1355,8 @@ article {
 		@media screen and (min-width: 640px) { width: calc(100% - 4 * var(--remgap)) }
 		@media screen and (min-width: 960px) {
 			margin-block: 8rem;
-			.rewards & { margin-block: 3rem }
+			.rewards &,
+			.fundraising & { margin-block: 3rem }
 			&+section::before { inset-block-start: -3rem }
 		}
 	}
@@ -1405,7 +1452,7 @@ article {
 	}
 	& aside {
 		padding: 4rem 1rem;
-		background-color: var(--color-d1);
+		background-color: var(--color-d2);
 		counter-reset: aside-description;
 		& h5 {
 			margin: 0;
@@ -1430,7 +1477,7 @@ article {
 		& dd+dt {
 			margin-block-start: 1em;
 			padding-block-start: 1em;
-			border-top: 1px solid var(--color-d2);
+			border-top: 1px solid var(--color-d1);
 		}
 		@media screen and (min-width: 960px) {
 			grid-column: 2 / 3;
@@ -1448,7 +1495,7 @@ article {
 		padding-block: calc(2 * var(--remgap));
 		line-height: 1.5;
 		font-size: 1.125em;
-		background-color: var(--color-d2);
+		background-color: var(--color-g0);
 		&>* {
 			margin-inline: auto;
 			width: calc(100% - 2 * var(--remgap));
@@ -1463,14 +1510,14 @@ article {
 			font-style: oblique;
 			text-align: center;
 			text-wrap: balance;
-			color: var(--color-r0);
+			color: var(--color-w0);
 			&::before { display: none }
 			@media screen and (min-width: 640px) { font-size: 2em }
 		}
 		& p,
 		& li {
 			font-weight: 500;
-			color: color-mix(in srgb, var(--color-b0) 70%, var(--color-d2) 30%);
+			color: var(--color-w0);
 			@media screen and (min-width: 640px) { font-size: 1.125em }
 		}
 		&::before {
@@ -1486,8 +1533,8 @@ article {
 			line-height: 1.5;
 			font-size: 2em;
 			font-weight: 900;
-			color: var(--color-w0);
-			background-color: var(--color-r0);
+			color: var(--color-g0);
+			background-color: var(--color-w0);
 		}
 		aside & {
 			margin-block-start: 3em;
@@ -1509,24 +1556,25 @@ article {
 		position: relative;
 		padding-block: calc(2 * var(--remgap));
 		line-height: 1.5;
-		background-color: var(--color-g0);
+		background-color: var(--color-w0);
 		& h5,
 		& h6 {
 			margin: 0;
 			line-height: 1.125;
 			text-align: center;
 			text-wrap: balance;
-			color: var(--color-w0);
 			&::before { display: none }
 		}
 		& h5 {
 			font-weight: 700;
 			font-size: 1.5em;
+			color: var(--color-b0);
 			@media screen and (min-width: 640px) { font-size: 2em }
 		}
 		& h6 {
 			font-weight: 400;
 			font-size: 1.125em;
+			color: var(--color-w0);
 			@media screen and (min-width: 640px) { font-size: 1.25em }
 		}
 		& p,
@@ -1548,7 +1596,7 @@ article {
 			& dd {
 				margin: 0;
 				padding-inline: 1rem;
-				background-color: var(--color-w0);
+				background-color: color-mix(in srgb, var(--color-w0) 50%, var(--color-d2) 50%);
 			}
 			& dt {
 				padding-block-start: 1rem;
@@ -1582,7 +1630,7 @@ article {
 				grid-column: 1 / span 2;
 				grid-row: 1 / 2;
 			}
-			& section,
+			&>section,
 			&>.bottomline,
 			&>.references {
 				grid-column: 1 / 2;
