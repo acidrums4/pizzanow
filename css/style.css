@@ -940,6 +940,7 @@ main {
 				text-wrap: balance;
 				@media screen and (min-width: 640px) { font-size: 1.125em }
 			}
+			@media screen and (min-width: 640px) { height: unset }
 		}
 		& h4 {
 			margin: 0;
@@ -1192,7 +1193,7 @@ article {
 		gap: var(--remgap);
 		margin-block: 4rem;
 		margin-inline: auto;
-		width: calc(100% - 2 * var(--remgap));
+		width: calc(100% - 4 * var(--remgap));
 		max-width: var(--maxwidth);
 		counter-increment: section;
 		& h5,
@@ -1244,20 +1245,11 @@ article {
 			&+p,
 			&+ol,
 			&+ul,
-			&+dl {
-				margin-block-start: calc(var(--emgap) / 2);
-				.about & { margin-block-start: 0 }
-			}
+			&+dl { margin-block-start: calc(var(--emgap) / 2) }
 			@media screen and (min-width: 640px) {
 				width: auto;
 				line-height: 1.5;
 				font-size: 1.125em;
-			}
-			.about & {
-				@media screen and (min-width: 640px) {
-					width: 100%;
-					max-width: var(--maxtextwidth);
-				}
 			}
 		}
 		& li::marker { color: var(--color-r0) }
@@ -1284,9 +1276,13 @@ article {
 		&.cards {
 			display: grid;
 			container-type: inline-size;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			background-color: transparent;
 			& section {
 				display: grid;
-				grid-template-columns: min-content 1fr;
+				grid-template-columns: 1fr;
 				grid-auto-rows: minmax(min-content, max-content);
 				grid-auto-flow: dense;
 				row-gap: 0;
@@ -1298,35 +1294,46 @@ article {
 				&>* { width: 100% }
 				& h5 { 
 					display: block;
-					grid-column: 2/3;
 					margin-block-end: 1rem;
 					font-size: 1.5em;
+					text-align: center;
+					@media screen and (min-width: 640px) {
+						grid-column: 2/3;
+						text-align: start;
+					}
 				}
 				& svg {
 					grid-column: 1/2;
 					grid-row: 1/9999;
 					margin-inline: auto;
 					margin-block-end: 1rem;
-					padding: 1rem;
+					padding: .75rem;
 					border-radius: 50%;
-					width: 2rem;
-					height: 2rem;
+					width: 1.5rem;
+					height: 1.5rem;
 					fill: none;
 					background-color: var(--color-w0);
 					stroke: color-mix(in srgb, var(--color-b0) 30%, var(--color-g1) 70%);
 					stroke-width: 1.5px;
+					@media screen and (min-width: 640px) { grid-column: 1/2 }
 				}
-				& ul,
-				& ol,
-				& p,
-				& dl,
-				& ul { grid-column: 2/3 }
 				& ul {
 					padding-inline-start: 0;
 					& li::marker { color: color-mix(in srgb, var(--color-b0) 30%, var(--color-g1) 70%) }
 				}
+				@media screen and (min-width: 640px) {
+					grid-template-columns: min-content 1fr;
+					& ul,
+					& ol,
+					& p,
+					& dl,
+					& ul { grid-column: 2/3 }
+				}
 			}
 			@container (min-width: 640px) { grid-template-columns: repeat(2, 1fr) }
+			@media screen and (min-width: 960px) { width: calc(100% - 2rem) }
+			@media screen and (min-width: 1280px) { max-width: calc(5 * (var(--maxwidth) / 8) + (0.5 * var(--remgap))) }
+			&::before { display: none }
 		}
 		.statistics & {
 			&>div {
@@ -1352,11 +1359,11 @@ article {
 				max-width: calc(var(--maxwidth) * .75);
 			}
 		}
-		@media screen and (min-width: 640px) { width: calc(100% - 4 * var(--remgap)) }
 		@media screen and (min-width: 960px) {
 			margin-block: 8rem;
+			.about &,
 			.rewards &,
-			.fundraising & { margin-block: 3rem }
+			.fundraising & { margin-block: 2rem }
 			&+section::before { inset-block-start: -3rem }
 		}
 	}
@@ -1364,29 +1371,31 @@ article {
 		display: flex;
 		flex-flow: column nowrap;
 		gap: var(--emgap);
-		margin: calc(2 * var(--emgap)) calc(-1 * var(--remgap));
-		width: calc(100% + 2 * var(--remgap));
+		margin: calc(2 * var(--remgap));
+		width: calc(100% - 4 * var(--remgap));
 		& picture {
 			display: block;
 			margin: 0 auto;
 			line-height: 0;
 		}
-		& img {
-			width: 100%;
-			border-radius: 1rem;
-		}
+		& img { width: 100% }
 		& figcaption {
 			margin: 0 auto;
 			max-width: var(--maxtextwidth);
 			line-height: 1.5;
 			text-align: center;
+			@media screen and (min-width: 640px) {
+				margin-inline-start: 0;
+				text-align: start;
+			}
 		}
 	}
 	&>table {
 		margin-inline: auto;
-		padding-block: 4rem;
+		padding: 2rem;
 		width: calc(100% - 2 * var(--remgap));
 		max-width: var(--maxwidth);
+		background-color: var(--color-w0);
 		& caption {
 			margin-block-end: 1em;
 			line-height: 1.5;
@@ -1445,19 +1454,26 @@ article {
 		}
 		@media screen and (min-width: 640px) { width: calc(100% - 4 * var(--remgap)) }
 		@media screen and (min-width: 960px) {
-			margin-block: 8rem;
+			margin-block: 2rem;
 			font-size: 1.125em;
 			& td::before { display: none }
 		}
 	}
 	& aside {
-		padding: 4rem 1rem;
-		background-color: var(--color-d2);
 		counter-reset: aside-description;
+		&>* {
+			padding-inline: 1rem;
+			background-color: var(--color-d2);
+		}
 		& h5 {
 			margin: 0;
+			padding-block-start: 2rem;
 			line-height: 1.25;
 			font-size: 1.125em;
+		}
+		& dl {
+			margin: 0;
+			&:last-of-type { padding-block-end: 2rem }
 		}
 		& dt {
 			font-weight: 600;
@@ -1480,14 +1496,236 @@ article {
 			border-top: 1px solid var(--color-d1);
 		}
 		@media screen and (min-width: 960px) {
+			margin: calc(var(--remgap) * 2);
 			grid-column: 2 / 3;
 			grid-row: 2 / 9999;
 			&>* { max-width: calc(var(--maxwidth) / 3 - 2 * var(--remgap)) }
 		}
+		@media screen and (min-width: 1280px) { max-width: calc(3 * (var(--maxwidth) / 8) - (3.5 * var(--remgap))) }
+	}
+	&.about {
+		& section {
+			margin-block: calc(2 * var(--remgap));
+			padding: calc(2 * var(--remgap));
+			background-color: var(--color-w0);
+		}
+		@media screen and (min-width: 960px) {
+			display: grid;
+			grid-template-columns: calc(50dvw + (var(--maxwidth) / 6)) 1fr;
+			&>div:first-child {
+				grid-column: 1 / span 2;
+				grid-row: 1 / 2;
+			}
+			&>section {
+				grid-column: 1 / 2;
+				justify-self: end;
+				margin-inline: 0;
+				padding-inline: calc(2 * var(--remgap));
+				width: calc(100% - 6 * var(--remgap));
+				max-width: calc(2 * (var(--maxwidth) / 3));
+			}
+		}
 		@media screen and (min-width: 1280px) {
-			padding-block: 3rem;
-			padding-inline-end: calc(2 * var(--remgap));
-			&>* { max-width: calc(var(--maxwidth) / 4) }
+			grid-template-columns: calc(50dvw + (var(--maxwidth) / 8)) 1fr;
+			& section { max-width: calc(5 * (var(--maxwidth) / 8) - (3.5 * var(--remgap))) }
+			&>figure { max-width: calc(3 * (var(--maxwidth) / 8) - (2.5 * var(--remgap))) }
+		}
+	}
+	&.fundraising {
+		&>section:first-of-type {
+			margin-block: 2rem 0;
+			padding-inline: calc(2 * var(--remgap));
+			padding-block: calc(2 * var(--remgap));
+			background-color: var(--color-w0);
+		}
+	}
+	&.pricing {
+		&>section {
+			margin: 0;
+			padding-block: 2rem;
+			width: 100%;
+			max-width: 100%;
+			& h5 {
+				display: block;
+				margin-inline: auto;
+				text-align: center;
+			}
+			&+section::before { display: none }
+		}
+		&>section:nth-of-type(1) {
+			background-color: var(--color-g0);
+			& h5 { color: var(--color-w0) }
+			& ul {
+				display: grid;
+				gap: 2rem;
+				margin-inline: auto;
+				margin-block-start: 1rem;
+				padding: 0;
+				width: calc(100% - (4 * var(--remgap)));
+				max-width: var(--maxwidth);
+				list-style: none;
+				& li {
+					display: flex;
+					flex-flow: column nowrap;
+					gap: 1rem;
+					padding: 2rem;
+					color: var(--color-w0);
+					background-color: color-mix(in srgb, var(--color-w0) 10%, var(--color-g0) 90%);
+					&>* { text-align: center; }
+					& strong { font-size: 3em }
+					& b {
+						flex: 1;
+						line-height: 1.25;
+					}
+				}
+				@media screen and (min-width: 960px) { grid-template-columns: repeat(3, 1fr) }
+			}
+		}
+		&>section:nth-of-type(2) {
+			background-color: var(--color-w0);
+			& h5 { color: var(--color-b0) }
+			& dl {
+				display: grid;
+				gap: 2rem;
+				grid-template-columns: 1fr;
+				grid-auto-flow: dense;
+				margin-inline: auto;
+				margin-block-start: 1rem;
+				padding: 0;
+				width: calc(100% - (4 * var(--remgap)));
+				max-width: var(--maxwidth);
+				& dt,
+				& dd {
+					margin: 0;
+					padding-inline: 2rem;
+					background-color: color-mix(in srgb, var(--color-g0) 10%, var(--color-w0) 90%);
+				}
+				& dt {
+					padding-block-start: 2rem;
+					font-size: 1.25em;
+					text-align: center;
+					text-wrap: balance;
+					color: color-mix(in srgb, var(--color-g0) 50%, var(--color-b0) 50%);
+				}
+				& dd {
+					margin-block-start: -2rem;
+					padding-block-end: 2rem;
+					color: color-mix(in srgb, var(--color-g0) 20%, var(--color-b0) 80%);
+				}
+				& svg {
+					display: block;
+					margin-inline: auto;
+					margin-block-end: 1rem;
+					padding: .75rem;
+					width: 1.5rem;
+					height: 1.5rem;
+					fill: none;
+					stroke: var(--color-g0);
+					stroke-width: 1.5px;
+				}
+				& ul {
+					margin-inline: 1rem;
+					padding: 0;
+				}
+				& li {
+					font-size: .875em;
+					&::marker { color: var(--color-g0) }
+				}
+				@media screen and (min-width: 960px) {
+					grid-template-columns: repeat(2, 1fr);
+					& dt:nth-of-type(odd),
+					& dd:nth-of-type(odd) { grid-column: 1 / 2 }
+					& dt:nth-of-type(even),
+					& dd:nth-of-type(even) { grid-column: 2 / 3 }
+				}
+			}
+		}
+		&>section:nth-of-type(3) {
+			background-color: var(--color-w0);
+			& h5 {
+				font-style: oblique;
+				color: var(--color-r0);
+			}
+			&>div {
+				margin-inline: auto;
+				padding-inline: 2rem;
+				max-width: calc(var(--maxwidth) / 2);
+			}
+			& ul { padding: 0 }
+		}
+		&>section:nth-of-type(4) {
+			background-color: var(--color-r0);
+			& h5 { color: var(--color-w0) }
+			&>p {
+				display: block;
+				width: 100%;
+				max-width: var(--maxwidth);
+				text-align: center;
+				text-wrap: balance;
+				color: var(--color-w0);
+			}
+			& dl {
+				display: grid;
+				gap: 2rem;
+				grid-template-columns: 1fr;
+				grid-auto-flow: dense;
+				margin-inline: auto;
+				margin-block-start: 1rem;
+				padding: 0;
+				width: calc(100% - (4 * var(--remgap)));
+				max-width: var(--maxwidth);
+				& dt,
+				& dd {
+					margin: 0;
+					padding-inline: 2rem;
+					background-color: color-mix(in srgb, var(--color-r0) 85%, var(--color-w0) 15%);
+					&:last-of-type {
+					background-color: color-mix(in srgb, var(--color-r0) 10%, var(--color-w0) 90%);
+					}
+				}
+				& dt {
+					padding-block-start: 2rem;
+					font-size: 1.25em;
+					text-align: center;
+					text-wrap: balance;
+					color: color-mix(in srgb, var(--color-r0) 10%, var(--color-w0) 90%);
+					&:last-of-type { color: color-mix(in srgb, var(--color-r0) 50%, var(--color-b0) 50%) }
+				}
+				& dd {
+					margin-block-start: -2rem;
+					padding-block-end: 2rem;
+					color: color-mix(in srgb, var(--color-r0) 20%, var(--color-b0) 80%);
+				}
+				& svg {
+					display: block;
+					margin-inline: auto;
+					margin-block-end: 1rem;
+					padding: .75rem;
+					width: 1.5rem;
+					height: 1.5rem;
+					fill: none;
+					stroke: var(--color-g0);
+					stroke-width: 1.5px;
+				}
+				& ul {
+					margin-inline: 1rem;
+					margin-block-start: 1rem;
+					padding: 0;
+				}
+				& li {
+					font-size: .875em;
+					&::marker { color: var(--color-w0) }
+					dt:last-of-type &::marker,
+					dd:last-of-type &::marker { color: var(--color-r0) }
+				}
+				@media screen and (min-width: 960px) {
+					grid-template-columns: repeat(2, 1fr);
+					& dt:nth-of-type(odd),
+					& dd:nth-of-type(odd) { grid-column: 1 / 2 }
+					& dt:nth-of-type(even),
+					& dd:nth-of-type(even) { grid-column: 2 / 3 }
+				}
+			}
 		}
 	}
 	& .bottomline {
@@ -1537,16 +1775,14 @@ article {
 			background-color: var(--color-w0);
 		}
 		aside & {
-			margin-block-start: 3em;
 			@media screen and (min-width: 960px) {
-				margin-block-start: 4em;
+				margin-block-start: 2em;
 				padding-block: var(--remgap);
 				font-size: 1em;
-				&>* { width: calc(100% - 2rem) }
+				&>* { width: 100% }
 				& h5,
 				& p,
 				& li { font-size: 1em }
-				& h5 { margin-block-start: 1em }
 				&>:last-child { margin-block-end: 0 }
 			}
 		}
@@ -1625,7 +1861,7 @@ article {
 	&:has(aside) {
 		@media screen and (min-width: 960px) {
 			display: grid;
-			grid-template-columns: calc(50dvw + var(--maxwidth) / 6) 1fr;
+			grid-template-columns: calc(50dvw + (var(--maxwidth)) / 6) 1fr;
 			&>div:first-child {
 				grid-column: 1 / span 2;
 				grid-row: 1 / 2;
@@ -1637,13 +1873,13 @@ article {
 				justify-self: end;
 				margin-inline: 0;
 				padding-inline: calc(2 * var(--remgap));
-				width: calc(100% - 4 * var(--remgap));
+				width: calc(100% - 6 * var(--remgap));
 				max-width: calc(2 * (var(--maxwidth) / 3));
 			}
 		}
 		@media screen and (min-width: 1280px) {
-			grid-template-columns: calc(50dvw + var(--maxwidth) / 4) 1fr;
-			& section { max-width: calc(3 * (var(--maxwidth) / 4) - 2 * var(--remgap)) }
+			grid-template-columns: calc(50dvw + (var(--maxwidth) / 8)) 1fr;
+			& section { max-width: calc(5 * (var(--maxwidth) / 8) - (3.5 * var(--remgap))) }
 			&>.bottomline,
 			&>.references { max-width: calc(3 * (var(--maxwidth) / 4) - 4 * var(--remgap)) }
 		}
