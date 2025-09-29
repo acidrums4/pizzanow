@@ -1149,7 +1149,7 @@ article {
 			z-index: -1;
 			object-fit: cover;
 			object-position: 50% 50%;
-			filter: brightness(.25) grayscale(.5);
+			filter: brightness(.9) grayscale(.1);
 		}
 		@media screen and (min-width: 960px) { margin-block-start: 0 }
 		& hgroup {
@@ -1179,7 +1179,7 @@ article {
 				line-height: 1.25em;
 				margin-top: .5em;
 				font-size: 1.5em;
-				font-weight: 300;
+				font-weight: 500;
 			}
 			@media screen and (min-width: 640px) {
 				padding-block-start: 12rem;
@@ -1362,6 +1362,7 @@ article {
 		@media screen and (min-width: 960px) {
 			margin-block: 8rem;
 			.about &,
+			.pricing &,
 			.rewards &,
 			.fundraising & { margin-block: 2rem }
 			&+section::before { inset-block-start: -3rem }
@@ -1540,6 +1541,9 @@ article {
 		}
 	}
 	&.pricing {
+		position: relative;
+		padding-block: calc(2 * var(--remgap));
+		line-height: 1.5;
 		&>section {
 			margin: 0;
 			padding-block: 2rem;
@@ -1551,6 +1555,11 @@ article {
 				text-align: center;
 			}
 			&+section::before { display: none }
+			@media screen and (min-width: 960px) {
+				width: calc(100% - 2rem);
+				box-sizing: border-box;
+			}
+			@media screen and (min-width: 1280px) { max-width: calc(5 * (var(--maxwidth) / 8) + (0.5 * var(--remgap))) }
 		}
 		&>section:nth-of-type(1) {
 			background-color: var(--color-g0);
@@ -1578,69 +1587,14 @@ article {
 						line-height: 1.25;
 					}
 				}
-				@media screen and (min-width: 960px) { grid-template-columns: repeat(3, 1fr) }
+				@media screen and (min-width: 960px) {
+					grid-template-columns: repeat(3, 1fr);
+					width: 100%;
+				}
 			}
+			@media screen and (min-width: 960px) { margin-block-start: 2rem }
 		}
 		&>section:nth-of-type(2) {
-			background-color: var(--color-w0);
-			& h5 { color: var(--color-b0) }
-			& dl {
-				display: grid;
-				gap: 2rem;
-				grid-template-columns: 1fr;
-				grid-auto-flow: dense;
-				margin-inline: auto;
-				margin-block-start: 1rem;
-				padding: 0;
-				width: calc(100% - (4 * var(--remgap)));
-				max-width: var(--maxwidth);
-				& dt,
-				& dd {
-					margin: 0;
-					padding-inline: 2rem;
-					background-color: color-mix(in srgb, var(--color-g0) 10%, var(--color-w0) 90%);
-				}
-				& dt {
-					padding-block-start: 2rem;
-					font-size: 1.25em;
-					text-align: center;
-					text-wrap: balance;
-					color: color-mix(in srgb, var(--color-g0) 50%, var(--color-b0) 50%);
-				}
-				& dd {
-					margin-block-start: -2rem;
-					padding-block-end: 2rem;
-					color: color-mix(in srgb, var(--color-g0) 20%, var(--color-b0) 80%);
-				}
-				& svg {
-					display: block;
-					margin-inline: auto;
-					margin-block-end: 1rem;
-					padding: .75rem;
-					width: 1.5rem;
-					height: 1.5rem;
-					fill: none;
-					stroke: var(--color-g0);
-					stroke-width: 1.5px;
-				}
-				& ul {
-					margin-inline: 1rem;
-					padding: 0;
-				}
-				& li {
-					font-size: .875em;
-					&::marker { color: var(--color-g0) }
-				}
-				@media screen and (min-width: 960px) {
-					grid-template-columns: repeat(2, 1fr);
-					& dt:nth-of-type(odd),
-					& dd:nth-of-type(odd) { grid-column: 1 / 2 }
-					& dt:nth-of-type(even),
-					& dd:nth-of-type(even) { grid-column: 2 / 3 }
-				}
-			}
-		}
-		&>section:nth-of-type(3) {
 			background-color: var(--color-w0);
 			& h5 {
 				font-style: oblique;
@@ -1650,10 +1604,11 @@ article {
 				margin-inline: auto;
 				padding-inline: 2rem;
 				max-width: calc(var(--maxwidth) / 2);
+				@media screen and (min-width: 960px) { max-width: 100% }
 			}
 			& ul { padding: 0 }
 		}
-		&>section:nth-of-type(4) {
+		&>section:nth-of-type(3) {
 			background-color: var(--color-r0);
 			& h5 { color: var(--color-w0) }
 			&>p {
@@ -1720,12 +1675,103 @@ article {
 				}
 				@media screen and (min-width: 960px) {
 					grid-template-columns: repeat(2, 1fr);
+					width: 100%;
 					& dt:nth-of-type(odd),
 					& dd:nth-of-type(odd) { grid-column: 1 / 2 }
 					& dt:nth-of-type(even),
 					& dd:nth-of-type(even) { grid-column: 2 / 3 }
 				}
 			}
+		}
+		& aside {
+			background-color: color-mix(in srgb, var(--color-g0) 10%, var(--color-w0) 90%);
+			& h5 {
+				font-size: 1.5em;
+				text-align: center;
+				color: var(--color-b0);
+				background-color: color-mix(in srgb, var(--color-g0) 10%, var(--color-w0) 90%);
+				@media screen and (min-width: 960px) {
+					padding-block-end: .5rem;
+					font-size: 1.25em;
+				}
+			}
+			& dl {
+				display: grid;
+				gap: 2rem;
+				grid-template-columns: 1fr;
+				grid-auto-flow: dense;
+				margin-inline: auto;
+				margin-block-start: 1rem;
+				padding: 0;
+				width: calc(100% - (4 * var(--remgap)));
+				max-width: var(--maxwidth);
+				background-color: transparent;
+				& dt,
+				& dd {
+					margin: 0;
+					padding-inline: 2rem;
+					background-color: color-mix(in srgb, var(--color-g0) 10%, var(--color-w0) 90%);
+					@media screen and (min-width: 960px) {
+						padding-inline: 1rem;
+						&+dt { border-top: 0 }
+					}
+				}
+				& dt {
+					padding-block-start: 2rem;
+					font-size: 1.25em;
+					text-align: center;
+					text-wrap: balance;
+					color: color-mix(in srgb, var(--color-g0) 50%, var(--color-b0) 50%);
+					&::before { display: none }
+					@media screen and (min-width: 960px) {
+						padding-block-start: 0;
+						font-size: 1em;
+					}
+				}
+				& dd {
+					margin-block-start: -2rem;
+					padding-block-end: 2rem;
+					color: color-mix(in srgb, var(--color-g0) 20%, var(--color-b0) 80%);
+					@media screen and (min-width: 960px) {
+						margin-block-start: 0;
+						padding-block-end: 1rem;
+					}
+				}
+				& svg {
+					display: block;
+					margin-inline: auto;
+					margin-block-end: 1rem;
+					padding: .75rem;
+					width: 1.5rem;
+					height: 1.5rem;
+					fill: none;
+					stroke: var(--color-g0);
+					stroke-width: 1.5px;
+					@media screen and (min-width: 960px) {
+						margin-block-end: 0;
+						padding: .25rem;
+					}
+				}
+				& ul {
+					margin-inline: 1rem;
+					padding: 0;
+					@media screen and (min-width: 960px) {
+						margin-inline: 1rem;
+						list-style-position: outside;
+					}
+				}
+				& li {
+					font-size: .875em;
+					&::marker { color: var(--color-g0) }
+				}
+				@media screen and (min-width: 960px) {
+					gap: 0;
+					margin-inline: 0;
+					margin-block-start: 0;
+					width: 100%;
+				}
+			}
+			@media screen and (min-width: 960px) { background-color: transparent }
 		}
 	}
 	& .bottomline {
@@ -1868,6 +1914,7 @@ article {
 			}
 			&>section,
 			&>.bottomline,
+			&>.pricing,
 			&>.references {
 				grid-column: 1 / 2;
 				justify-self: end;
@@ -1881,6 +1928,7 @@ article {
 			grid-template-columns: calc(50dvw + (var(--maxwidth) / 8)) 1fr;
 			& section { max-width: calc(5 * (var(--maxwidth) / 8) - (3.5 * var(--remgap))) }
 			&>.bottomline,
+			&>.pricing,
 			&>.references { max-width: calc(3 * (var(--maxwidth) / 4) - 4 * var(--remgap)) }
 		}
 	}
